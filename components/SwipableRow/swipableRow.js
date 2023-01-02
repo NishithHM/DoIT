@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import {Animated, StyleSheet, Text, View} from 'react-native';
 import {RectButton, Swipeable} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import styles from './swipableRow.styles';
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
 const SwipableRow = ({item}) => {
@@ -61,36 +61,5 @@ const SwipableRow = ({item}) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  leftAction: {
-    flex: 1,
-    backgroundColor: '#388e3c',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    flexDirection: 'row-reverse',
-  },
-  actionIcon: {
-    width: 30,
-    marginHorizontal: 10,
-  },
-  rightAction: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    backgroundColor: '#dd2c00',
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  text: {
-    padding: 10,
-    color: 'black',
-    width: '98%',
-    alignSelf: 'center',
-    backgroundColor: 'lightgrey',
-  },
-  viewStyle: {
-    margin: 10,
-  },
-});
 
 export default SwipableRow;
