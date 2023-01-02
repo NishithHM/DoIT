@@ -18,7 +18,9 @@ import fireBlack from './assets/fireBlack.png';
 import fireGrey from './assets/fireGrey.png';
 import yearlyGrey from './assets/yearlyGrey.png';
 import yearlyBlack from './assets/yearlyBlack.png';
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconF from 'react-native-vector-icons/FontAwesome5';
 const screenOptions = {animationEnabled: true, headerShown: false};
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -45,8 +47,8 @@ const TabNavigator = () => {
           const routeName = getFocusedRouteNameFromRoute(route) ?? 'Today';
           return {
             tabBarIcon: ({focused}) => {
-              const iconName = 'Today' && focused ? todayBlack : todayGrey;
-              return <Image style={styles.tabIcon} source={iconName} />;
+              const color = 'Today' && focused ? 'black' : 'grey';
+              return <Icon size={25} name="today" color={color} />;
             },
             tabBarLabel: ({focused}) => (
               <Text
@@ -54,7 +56,7 @@ const TabNavigator = () => {
                   styles.tabNameLabel,
                   routeName === 'Today' && focused
                     ? styles.tabNameActive
-                    : styles.tabNameInActive,
+                    : styles.tabNameInactive,
                 ]}>
                 Today
               </Text>
@@ -69,8 +71,8 @@ const TabNavigator = () => {
           const routeName = getFocusedRouteNameFromRoute(route) ?? 'Weekly';
           return {
             tabBarIcon: ({focused}) => {
-              const iconName = 'Weekly' && focused ? weekBlack : weekGrey;
-              return <Image style={styles.tabIcon} source={iconName} />;
+              const color = 'Weekly' && focused ? 'black' : 'grey';
+              return <IconM name="calendar-week" size={25} color={color} />;
             },
             tabBarLabel: ({focused}) => (
               <Text
@@ -78,7 +80,7 @@ const TabNavigator = () => {
                   styles.tabNameLabel,
                   routeName === 'Weekly' && focused
                     ? styles.tabNameActive
-                    : styles.tabNameInActive,
+                    : styles.tabNameInactive,
                 ]}>
                 Weekly
               </Text>
@@ -93,15 +95,8 @@ const TabNavigator = () => {
           const routeName = getFocusedRouteNameFromRoute(route) ?? 'Monthly';
           return {
             tabBarIcon: ({focused}) => {
-              const iconName =
-                'Monthly' && focused ? monthlyBlack : monthlyGrey;
-              return (
-                <Image
-                  style={styles.tabIcon}
-                  source={iconName}
-                  resizeMethod="resize"
-                />
-              );
+              const color = 'Monthly' && focused ? 'black' : 'grey';
+              return <IconM size={25} name="calendar-month" color={color} />;
             },
             tabBarLabel: ({focused}) => (
               <Text
@@ -109,7 +104,7 @@ const TabNavigator = () => {
                   styles.tabNameLabel,
                   routeName === 'Monthly' && focused
                     ? styles.tabNameActive
-                    : styles.tabNameInActive,
+                    : styles.tabNameInactive,
                 ]}>
                 Monthly
               </Text>
@@ -133,7 +128,7 @@ const TabNavigator = () => {
                   styles.tabNameLabel,
                   routeName === 'Yearly' && focused
                     ? styles.tabNameActive
-                    : styles.tabNameInActive,
+                    : styles.tabNameInactive,
                 ]}>
                 Yearly
               </Text>
@@ -148,8 +143,8 @@ const TabNavigator = () => {
           const routeName = getFocusedRouteNameFromRoute(route) ?? 'Streaks';
           return {
             tabBarIcon: ({focused}) => {
-              const iconName = 'Streaks' && focused ? fireBlack : fireGrey;
-              return <Image style={styles.tabIcon} source={iconName} />;
+              const color = 'Streaks' && focused ? 'black' : 'grey';
+              return <IconF size={25} name="fire" color={color} />;
             },
             tabBarLabel: ({focused}) => (
               <Text
@@ -157,7 +152,7 @@ const TabNavigator = () => {
                   styles.tabNameLabel,
                   routeName === 'Streaks' && focused
                     ? styles.tabNameActive
-                    : styles.tabNameInActive,
+                    : styles.tabNameInactive,
                 ]}>
                 Streaks
               </Text>
