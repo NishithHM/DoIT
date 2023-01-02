@@ -22,12 +22,23 @@ const styles = StyleSheet.create({
   text: {
     padding: 10,
     color: 'black',
-    width: '98%',
+    flex: 1,
     alignSelf: 'center',
     backgroundColor: 'lightgrey',
   },
   viewStyle: {
     margin: 10,
+  },
+  textContainer: {
+    flexDirection: 'row',
+  },
+  streak: {
+    backgroundColor: 'lightgrey',
+    padding: 10,
+    color: 'black',
+    fontSize: 14,
+    fontWeight: 'bold',
+    // justifyContent:'space-around'
   },
 });
 

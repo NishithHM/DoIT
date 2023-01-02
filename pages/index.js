@@ -4,4 +4,5 @@ import Weekly from './weekly';
 import Yearly from './yearly';
 import Streak from './streak';
 import Monthly from './monthly';
-export {Splash, Daily, Weekly, Yearly, Streak, Monthly};
+import Overdue from './overdue';
+export {Splash, Daily, Weekly, Yearly, Streak, Monthly, Overdue};

@@ -7,15 +7,7 @@ import {Image, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Splash, Daily, Weekly, Monthly, Yearly, Streak} from './pages';
-import todayBlack from './assets/todayBlack.png';
-import todayGrey from './assets/todayGrey.png';
-import weekBlack from './assets/weekBlack.png';
-import weekGrey from './assets/weekGrey.png';
-import monthlyBlack from './assets/monthlyBlack.png';
-import monthlyGrey from './assets/monthlyGrey.jpeg';
-import fireBlack from './assets/fireBlack.png';
-import fireGrey from './assets/fireGrey.png';
+import {Splash, Daily, Weekly, Monthly, Yearly, Streak, Overdue} from './pages';
 import yearlyGrey from './assets/yearlyGrey.png';
 import yearlyBlack from './assets/yearlyBlack.png';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -36,7 +28,6 @@ const TabNavigator = () => {
         },
         tabBarLabelStyle: {
           fontSize: 12,
-          fontFamily: 'Inter-Medium',
         },
         headerShown: false,
       }}>
@@ -155,6 +146,30 @@ const TabNavigator = () => {
                     : styles.tabNameInactive,
                 ]}>
                 Streaks
+              </Text>
+            ),
+          };
+        }}
+      />
+      <Tab.Screen
+        name="Overdue"
+        component={Overdue}
+        options={({route}) => {
+          const routeName = getFocusedRouteNameFromRoute(route) ?? 'Overdue';
+          return {
+            tabBarIcon: ({focused}) => {
+              const color = 'Overdue' && focused ? 'black' : 'grey';
+              return <Icon name="alert-circle" size={25} color={color} />;
+            },
+            tabBarLabel: ({focused}) => (
+              <Text
+                style={[
+                  styles.tabNameLabel,
+                  routeName === 'Overdue' && focused
+                    ? styles.tabNameActive
+                    : styles.tabNameInactive,
+                ]}>
+                Overdue
               </Text>
             ),
           };

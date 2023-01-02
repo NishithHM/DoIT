@@ -1,4 +1,4 @@
 import SwipableRow from './SwipableRow';
 import AddButton from './AddButton';
-export {SwipableRow, AddButton};
-
+import TaskRenderer from './TaskRenderer';
+export {SwipableRow, AddButton, TaskRenderer};

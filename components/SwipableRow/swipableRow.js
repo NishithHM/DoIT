@@ -5,22 +5,34 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './swipableRow.styles';
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
-const SwipableRow = ({item}) => {
+const SwipableRow = ({item, id, onDelete, onDone, status, streak}) => {
   const swipeRef = useRef();
+
   const updateRef = ref => {
     swipeRef.current = ref;
   };
+
   const onClose = () => {
     swipeRef.current.close();
   };
-  const renderLeftActions = (progress, dragX) => {
+
+  const onDeleteSwipe = () => {
+    onDelete(id);
+    onClose();
+  };
+
+  const onDoneSwipe = () => {
+    onDone(id);
+    onClose();
+  };
+  const renderLeftActions = (progress, dragX, id) => {
     const scale = dragX.interpolate({
       inputRange: [0, 80],
       outputRange: [0, 1],
       extrapolate: 'clamp',
     });
     return (
-      <RectButton style={styles.leftAction} onPress={onClose}>
+      <RectButton style={styles.leftAction} onPress={onDoneSwipe}>
         <AnimatedIcon
           name="done"
           size={30}
@@ -30,14 +42,14 @@ const SwipableRow = ({item}) => {
       </RectButton>
     );
   };
-  const renderRightActions = (progress, dragX) => {
+  const renderRightActions = (progress, dragX, id) => {
     const scale = dragX.interpolate({
       inputRange: [-80, 0],
       outputRange: [1, 0],
       extrapolate: 'clamp',
     });
     return (
-      <RectButton style={styles.rightAction} onPress={onClose}>
+      <RectButton style={styles.rightAction} onPress={onDeleteSwipe}>
         <AnimatedIcon
           name="delete-forever"
           size={30}
@@ -56,7 +68,16 @@ const SwipableRow = ({item}) => {
         rightThreshold={41}
         renderLeftActions={renderLeftActions}
         renderRightActions={renderRightActions}>
-        <Text style={styles.text}>{item}</Text>
+        <View style={styles.textContainer}>
+          <Text
+            style={{
+              ...styles.text,
+              backgroundColor: status === 1 ? 'lightgreen' : 'lightgrey',
+            }}>
+            {item}&emsp;
+          </Text>
+          {streak > 0 && <Text style={styles.streak}>{streak}</Text>}
+        </View>
       </Swipeable>
     </View>
   );

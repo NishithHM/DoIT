@@ -7,7 +7,7 @@ const AddButton = ({onPress}) => {
   return (
     <View style={styles.buttonStyle}>
       <TouchableWithoutFeedback onPress={onPress}>
-        <IconF size={25} name="plus" color={'black'} />
+        <IconF size={25} name="plus" color={'white'} />
       </TouchableWithoutFeedback>
     </View>
   );

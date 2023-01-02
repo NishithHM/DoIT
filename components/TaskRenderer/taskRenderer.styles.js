@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   centeredView: {
     flex: 1,
@@ -40,6 +41,20 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-around',
+  },
+  titleView: {
+    marginTop: 10,
+    padding: 10,
+    textAlign: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    marginLeft: 5,
+    marginRight: 5,
+  },
+  titleText: {
+    fontSize: 30,
+    color: 'black',
+    fontWeight: 'bold',
   },
 });
 

@@ -1,60 +1,62 @@
 import React, {useState} from 'react';
-import {Text, View, FlatList, Modal, Pressable} from 'react-native';
-import {
-  TextInput,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
-import {SwipableRow, AddButton} from '../../components';
+import {View} from 'react-native';
+import {TaskRenderer} from '../../components';
+import {writeTaskData} from '../../realm';
 import styles from './daily.styles';
+import dayjs from 'dayjs';
+import TaskContext, {Task} from '../../models/task.model';
+const {useRealm, useQuery, useObject} = TaskContext;
+import {Realm} from '@realm/react';
 const Daily = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-  const [task, setTask] = useState('');
-  const arr = [
-    {task: 'hello 1'},
-    {task: 'hello 2'},
-    {task: 'hello 3'},
-    {task: 'hello 4'},
-  ];
-  const closeModal = () => {
-    setModalVisible(false);
-    setTask('');
+  const [update, setUpdate] = useState(false);
+  const realm = useRealm();
+  const tasks = realm.objects('Task');
+  console.log(tasks);
+  console.log(
+    `type == 'daily' && isActive == true && createdOn >= ${dayjs().format(
+      'YYYY-MM-DD@00:00:00',
+    )} && createdOn < ${dayjs().add(1, 'day').format('YYYY-MM-DD@00:00:00')}`,
+  );
+  const dailyTask = tasks.filtered(
+    `type == 'daily' && isActive == true && createdOn >= ${dayjs().format(
+      'YYYY-MM-DD@00:00:00',
+    )} && createdOn < ${dayjs().add(1, 'day').format('YYYY-MM-DD@00:00:00')}`,
+  );
+  const onAddTask = async task => {
+    realm.write(() => {
+      realm.create(
+        'Task',
+        Task.generate(
+          task,
+          0,
+          dayjs().endOf('day').add(330, 'minutes').toDate(),
+          'daily',
+        ),
+      );
+    });
   };
+
+  const onDelete = id => {
+    const items = realm.objects('Task').filtered(`_id == oid(${id})`);
+    const item = items[0];
+    realm.write(() => (item.isActive = false));
+    setUpdate(prev => !prev);
+  };
+  const onDone = id => {
+    const items = realm.objects('Task').filtered(`_id == oid(${id})`);
+    const item = items[0];
+    realm.write(() => (item.status = 1));
+    setUpdate(prev => !prev);
+  };
+
   return (
     <View style={styles.container}>
-      <FlatList
-        data={arr}
-        keyExtractor={item => item.task}
-        renderItem={({item, index}) => {
-          return <SwipableRow key={item.task} item={item.task} />;
-        }}
+      <TaskRenderer
+        list={dailyTask}
+        onAdd={onAddTask}
+        onDelete={onDelete}
+        onDone={onDone}
       />
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={closeModal}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Add Task</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={e => setTask(e)}
-              value={task}
-              placeholder="add task here"
-            />
-            <View style={styles.modalButtons}>
-              <Pressable onPress={closeModal}>
-                <Text style={styles.modalText}>Close</Text>
-              </Pressable>
-              <Pressable onPress={closeModal}>
-                <Text style={styles.modalText}>Save</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
-      </Modal>
-
-      <AddButton onPress={() => setModalVisible(true)} />
     </View>
   );
 };
