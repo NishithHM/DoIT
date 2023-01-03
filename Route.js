@@ -7,15 +7,29 @@ import {Image, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Splash, Daily, Weekly, Monthly, Yearly, Streak, Overdue} from './pages';
+import {
+  Splash,
+  Daily,
+  Weekly,
+  Monthly,
+  Yearly,
+  Streak,
+  Overdue,
+  Stats,
+} from './pages';
 import yearlyGrey from './assets/yearlyGrey.png';
 import yearlyBlack from './assets/yearlyBlack.png';
 import Icon from 'react-native-vector-icons/Ionicons';
 import IconM from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconF from 'react-native-vector-icons/FontAwesome5';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 const screenOptions = {animationEnabled: true, headerShown: false};
+import 'react-native-gesture-handler';
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
 const TabNavigator = () => {
   return (
     <Tab.Navigator
@@ -179,6 +193,15 @@ const TabNavigator = () => {
   );
 };
 
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Todo's">{() => <TabNavigator />}</Drawer.Screen>
+      <Drawer.Screen name="Stats" component={Stats} />
+    </Drawer.Navigator>
+  );
+};
+
 const Route = () => {
   return (
     <SafeAreaView style={styles.screen}>
@@ -186,6 +209,9 @@ const Route = () => {
       <NavigationContainer>
         <Stack.Navigator screenOptions={screenOptions}>
           <Stack.Screen name="Splash" component={Splash} />
+          <Stack.Screen name="DrawerStack">
+            {() => <DrawerNavigator />}
+          </Stack.Screen>
           <Stack.Screen name="AppStack">{() => <TabNavigator />}</Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>

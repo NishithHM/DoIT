@@ -8,7 +8,7 @@ const Splash = () => {
   const navigation = useNavigation();
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('AppStack');
+      navigation.navigate('DrawerStack');
     }, 1000);
   }, []);
   return (

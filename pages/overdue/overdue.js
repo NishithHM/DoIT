@@ -10,9 +10,11 @@ const Overdue = () => {
   const realm = useRealm();
   const tasks = realm.objects('Task');
   const overdueTask = tasks.filtered(
-    `expiryOn < ${dayjs().format(
-      'YYYY-MM-DD@HH:mm:ss',
-    )} && status == 0 && isActive == true`,
+    `expiryOn < ${dayjs()
+      .add(330, 'minutes')
+      .format(
+        'YYYY-MM-DD@HH:mm:ss',
+      )} && status == 0 && isActive == true && type != 'streak'`,
   );
   return (
     <View style={styles.container}>
