@@ -14,10 +14,9 @@ const Monthly = () => {
   const monthlyTask = tasks.filtered(
     `type == 'monthly' && isActive == true && createdOn >= ${dayjs()
       .startOf('month')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
       .endOf('months')
-      .add(330, 'minutes')
+      .add(1, 'day')
       .format('YYYY-MM-DD@00:00:00')}`,
   );
   const onAddTask = async task => {

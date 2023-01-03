@@ -9,13 +9,13 @@ const {useRealm, useQuery, useObject} = TaskContext;
 const Overdue = () => {
   const realm = useRealm();
   const tasks = realm.objects('Task');
+
   const overdueTask = tasks.filtered(
-    `expiryOn < ${dayjs()
-      .add(330, 'minutes')
-      .format(
-        'YYYY-MM-DD@HH:mm:ss',
-      )} && status == 0 && isActive == true && type != 'streak'`,
+    `expiryOn < ${dayjs().format(
+      'YYYY-MM-DD@HH:mm:ss',
+    )} && status == 0 && isActive == true && type != 'streak'`,
   );
+  console.log(overdueTask);
   return (
     <View style={styles.container}>
       <TaskRenderer list={overdueTask} isAdd={false} />

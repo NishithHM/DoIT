@@ -14,12 +14,12 @@ const Weekly = () => {
   const weeklyTask = tasks.filtered(
     `type == 'weekly' && isActive == true && createdOn >= ${dayjs()
       .startOf('week')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
       .endOf('week')
-      .add(330, 'minutes')
+      .add(1, 'day')
       .format('YYYY-MM-DD@00:00:00')}`,
   );
+
   const onAddTask = async task => {
     realm.write(() => {
       realm.create(

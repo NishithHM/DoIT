@@ -43,10 +43,9 @@ const Stats = () => {
         'YYYY-MM-DD@HH:mm:ss',
       )} && status == 0 && isActive == true && createdOn >= ${dayjs()
       .startOf('year')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
       .endOf('year')
-      .add(330, 'minutes')
+      .add(1, 'day')
       .format('YYYY-MM-DD@00:00:00')} && type != 'streak'`,
   );
   const widthAndHeight = 270;

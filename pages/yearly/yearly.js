@@ -13,10 +13,9 @@ const Yearly = () => {
   const yearlyTask = tasks.filtered(
     `type == 'yearly' && isActive == true && createdOn >= ${dayjs()
       .startOf('year')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
       .endOf('year')
-      .add(330, 'minutes')
+      .add(1, 'day')
       .format('YYYY-MM-DD@00:00:00')}`,
   );
   const onAddTask = async task => {
