@@ -30,6 +30,12 @@ const Streak = () => {
     realm.write(() => (item.streak = item.streak + 1));
     setUpdate(prev => !prev);
   };
+  const onCancel = id => {
+    const items = realm.objects('Task').filtered(`_id == oid(${id})`);
+    const item = items[0];
+    realm.write(() => (item.streak = 0));
+    setUpdate(prev => !prev);
+  };
   return (
     <View style={styles.container}>
       <TaskRenderer
@@ -37,6 +43,7 @@ const Streak = () => {
         onAdd={onAddTask}
         onDelete={onDelete}
         onDone={onDone}
+        onCancel={onCancel}
       />
     </View>
   );

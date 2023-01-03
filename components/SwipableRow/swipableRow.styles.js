@@ -40,6 +40,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     // justifyContent:'space-around'
   },
+  leftActionCancel: {
+    flex: 1,
+    backgroundColor: '#FF8000',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    flexDirection: 'row-reverse',
+  },
 });
 
 export default styles;

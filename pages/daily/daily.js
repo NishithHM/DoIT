@@ -11,12 +11,7 @@ const Daily = () => {
   const [update, setUpdate] = useState(false);
   const realm = useRealm();
   const tasks = realm.objects('Task');
-  console.log(tasks);
-  console.log(
-    `type == 'daily' && isActive == true && createdOn >= ${dayjs().format(
-      'YYYY-MM-DD@00:00:00',
-    )} && createdOn < ${dayjs().add(1, 'day').format('YYYY-MM-DD@00:00:00')}`,
-  );
+  
   const dailyTask = tasks.filtered(
     `type == 'daily' && isActive == true && createdOn >= ${dayjs().format(
       'YYYY-MM-DD@00:00:00',

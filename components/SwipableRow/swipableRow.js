@@ -5,7 +5,16 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from './swipableRow.styles';
 const AnimatedIcon = Animated.createAnimatedComponent(Icon);
 
-const SwipableRow = ({item, id, onDelete, onDone, status, streak}) => {
+const SwipableRow = ({
+  item,
+  id,
+  onDelete,
+  onDone,
+  status,
+  streak,
+  route,
+  onCancel = () => null,
+}) => {
   const swipeRef = useRef();
 
   const updateRef = ref => {
@@ -25,6 +34,11 @@ const SwipableRow = ({item, id, onDelete, onDone, status, streak}) => {
     onDone(id);
     onClose();
   };
+
+  const onCancelSwipe = () => {
+    onCancel(id);
+    onClose();
+  };
   const renderLeftActions = (progress, dragX, id) => {
     const scale = dragX.interpolate({
       inputRange: [0, 80],
@@ -32,14 +46,16 @@ const SwipableRow = ({item, id, onDelete, onDone, status, streak}) => {
       extrapolate: 'clamp',
     });
     return (
-      <RectButton style={styles.leftAction} onPress={onDoneSwipe}>
-        <AnimatedIcon
-          name="done"
-          size={30}
-          color="#fff"
-          style={[styles.actionIcon]}
-        />
-      </RectButton>
+      <>
+        <RectButton style={styles.leftAction} onPress={onDoneSwipe}>
+          <AnimatedIcon
+            name="done"
+            size={30}
+            color="#fff"
+            style={[styles.actionIcon]}
+          />
+        </RectButton>
+      </>
     );
   };
   const renderRightActions = (progress, dragX, id) => {
@@ -49,14 +65,26 @@ const SwipableRow = ({item, id, onDelete, onDone, status, streak}) => {
       extrapolate: 'clamp',
     });
     return (
-      <RectButton style={styles.rightAction} onPress={onDeleteSwipe}>
-        <AnimatedIcon
-          name="delete-forever"
-          size={30}
-          color="#fff"
-          style={[styles.actionIcon]}
-        />
-      </RectButton>
+      <>
+        <RectButton style={styles.rightAction} onPress={onDeleteSwipe}>
+          <AnimatedIcon
+            name="delete-forever"
+            size={30}
+            color="#fff"
+            style={[styles.actionIcon]}
+          />
+        </RectButton>
+        {route === 'Streaks' && (
+          <RectButton style={styles.leftActionCancel} onPress={onCancelSwipe}>
+            <AnimatedIcon
+              name="cancel"
+              size={30}
+              color="#fff"
+              style={[styles.actionIcon]}
+            />
+          </RectButton>
+        )}
+      </>
     );
   };
   return (

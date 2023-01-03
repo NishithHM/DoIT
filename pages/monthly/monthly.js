@@ -10,12 +10,26 @@ const Monthly = () => {
   const [update, setUpdate] = useState(false);
   const realm = useRealm();
   const tasks = realm.objects('Task');
-  const monthlyTask = tasks.filtered("type == 'monthly' && isActive == true");
+
+  const monthlyTask = tasks.filtered(
+    `type == 'monthly' && isActive == true && createdOn >= ${dayjs()
+      .startOf('month')
+      .add(330, 'minutes')
+      .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
+      .endOf('months')
+      .add(330, 'minutes')
+      .format('YYYY-MM-DD@00:00:00')}`,
+  );
   const onAddTask = async task => {
     realm.write(() => {
       realm.create(
         'Task',
-        Task.generate(task, 0, dayjs().endOf('month').toDate(), 'monthly'),
+        Task.generate(
+          task,
+          0,
+          dayjs().endOf('month').add(330, 'minutes').toDate(),
+          'monthly',
+        ),
       );
     });
   };

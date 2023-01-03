@@ -5,7 +5,14 @@ import styles from './taskRenderer.styles';
 import {useRoute} from '@react-navigation/native';
 import dayjs from 'dayjs';
 
-const TaskRenderer = ({list, onAdd, isAdd = true, onDelete, onDone}) => {
+const TaskRenderer = ({
+  list,
+  onAdd,
+  isAdd = true,
+  onDelete,
+  onDone,
+  onCancel,
+}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [task, setTask] = useState('');
   const route = useRoute();
@@ -54,6 +61,8 @@ const TaskRenderer = ({list, onAdd, isAdd = true, onDelete, onDone}) => {
               id={item._id}
               status={item.status}
               streak={item.streak}
+              route={route.name}
+              onCancel={onCancel}
             />
           );
         }}

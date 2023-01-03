@@ -9,7 +9,16 @@ const Yearly = () => {
   const [update, setUpdate] = useState(false);
   const realm = useRealm();
   const tasks = realm.objects('Task');
-  const yearlyTask = tasks.filtered("type == 'yearly' && isActive == true");
+
+  const yearlyTask = tasks.filtered(
+    `type == 'yearly' && isActive == true && createdOn >= ${dayjs()
+      .startOf('year')
+      .add(330, 'minutes')
+      .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
+      .endOf('year')
+      .add(330, 'minutes')
+      .format('YYYY-MM-DD@00:00:00')}`,
+  );
   const onAddTask = async task => {
     realm.write(() => {
       realm.create(
