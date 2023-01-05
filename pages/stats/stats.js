@@ -11,37 +11,29 @@ const Stats = () => {
   const done = tasks.filtered(
     `isActive == true && status == 1 && createdOn >= ${dayjs()
       .startOf('year')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
       .endOf('year')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')}`,
   );
   const todo = tasks.filtered(
     `isActive == true && status == 0 && createdOn >= ${dayjs()
       .startOf('year')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
       .endOf('year')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')}`,
   );
   const deleted = tasks.filtered(
     `isActive == false && createdOn >= ${dayjs()
       .startOf('year')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
       .endOf('year')
-      .add(330, 'minutes')
       .format('YYYY-MM-DD@00:00:00')}`,
   );
 
   const overduePending = tasks.filtered(
-    `expiryOn < ${dayjs()
-      .add(330, 'minutes')
-      .format(
-        'YYYY-MM-DD@HH:mm:ss',
-      )} && status == 0 && isActive == true && createdOn >= ${dayjs()
+    `expiryOn < ${dayjs().format(
+      'YYYY-MM-DD@HH:mm:ss',
+    )} && status == 0 && isActive == true && createdOn >= ${dayjs()
       .startOf('year')
       .format('YYYY-MM-DD@00:00:00')} && createdOn < ${dayjs()
       .endOf('year')
@@ -55,8 +47,14 @@ const Stats = () => {
     deleted.length,
     overduePending.length,
   ];
+  console.log(overduePending)
   const sliceColor = ['#32a852', '#808080', '#a18900', '#96032f'];
-  const labels = ['Done', 'To Do', 'Deleted', 'Overdue'];
+  const labels = [
+    `Done ${done.length}`,
+    `To Do ${todo.length}`,
+    `Deleted ${deleted.length}`,
+    `Overdue ${overduePending.length}`,
+  ];
   return (
     <View style={styles.container}>
       <>
