@@ -6,10 +6,18 @@ import stairs from '../../assets/stairs.png';
 import {useNavigation} from '@react-navigation/native';
 const Splash = () => {
   const navigation = useNavigation();
-  useEffect(() => {
+
+  const onFocus = () => {
     setTimeout(() => {
       navigation.navigate('DrawerStack');
     }, 1000);
+  };
+
+  useEffect(() => {
+    const focusSub = navigation.addListener('focus', onFocus);
+    () => {
+      focusSub();
+    };
   }, []);
   return (
     <View style={styles.container}>
